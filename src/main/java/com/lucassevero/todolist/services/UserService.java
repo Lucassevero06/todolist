@@ -1,7 +1,6 @@
 package com.lucassevero.todolist.services;
 
 import com.lucassevero.todolist.models.User;
-import com.lucassevero.todolist.repositories.TaskRepository;
 import com.lucassevero.todolist.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +14,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private TaskRepository taskRepository;
-
     //busca o usuario pelo seu id, ele verifica a existencia do user no banco, e se não existir, retorna uma execption
     public User findById(Long id) {
         Optional<User> user = this.userRepository.findById(id);
@@ -30,7 +26,6 @@ public class UserService {
     public User create(User obj) {
         obj.setId(null);
         obj = this.userRepository.save(obj);
-        this.taskRepository.saveAll(obj.getTasks());
         return obj;
     }
 
